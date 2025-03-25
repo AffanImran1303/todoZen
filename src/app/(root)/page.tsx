@@ -1,8 +1,10 @@
+import { getUserId } from '@/actions'
 import AddNewTaskComponent from '@/components/AddTask'
 import TaskList from '@/components/TaskList'
 import React from 'react'
 
-const page = () => {
+async function page() {
+  const userId=await getUserId();
   return (
     <section className="wrapper w-full lg:grid lg:grid-cols-2">
         <div className="md:p-12 grid grid-rows-3">
@@ -13,12 +15,12 @@ const page = () => {
             <p>Connect with your tasks, mindfully. TodoZen brings a sense of calm to your daily goals.</p>
           </div>
           <div>
-            <AddNewTaskComponent/>
+            <AddNewTaskComponent userId={userId}/>
           </div>
         </div>
         <div className="border-2 shadow-2xl rounded-xl">
           <p className="text-2xl mt-4 place-self-center text-[#574ef0] font-semibold">My Tasks</p>
-          <TaskList/>
+          <TaskList userId={userId}/>
         </div>
     </section>
   )

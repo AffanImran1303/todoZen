@@ -3,6 +3,11 @@ import { db } from "@/lib/database";
 import { AddNewTaskTypes} from "@/types";
 import { auth } from "@clerk/nextjs/server";
 
+export async function getUserId(){
+    const {userId}=await auth();
+    return userId;
+}
+
 export async function addTask({}:AddNewTaskTypes){
     try{
         const {userId} = await auth();

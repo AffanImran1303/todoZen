@@ -1,11 +1,12 @@
 "use client";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useState } from "react";
-import { addTask } from "@/actions";
+import { useEffect, useState } from "react";
+import { addTask, getUserId } from "@/actions";
 import AlertBox from "./AlertBox";
+import { UserIsLoggedInProps } from "@/types";
 
-const AddNewTaskComponent = () => {
+const AddNewTaskComponent:React.FC<UserIsLoggedInProps> = ({userId}) => {
   const [title, setTitle] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -29,10 +30,15 @@ const AddNewTaskComponent = () => {
     setShowAlert(true);
   }
 
+  if(!userId){
+    return(
+      <div>
+        <p className="text-[#574ef0]">Please Sign in to continue.</p>
+      </div>
+    )
+  }
   return (
     <div>
-      {isLoading && <div>Loading...</div>}
-      {error && <div style={{ color: "red" }}>Error: {error}</div>}
       <div className="w-full space-y-4 lg:flex justify-between space-x-6 place-self-start">
         <Input
           placeholder="What's on your mind?"

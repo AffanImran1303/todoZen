@@ -2,7 +2,7 @@
 import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
-import { Task } from "@/types";
+import { Task, UserIsLoggedInProps } from "@/types";
 import { checkTask, deleteTask, getAllTasks, updateTask } from "@/actions";
 import {
   Dialog,
@@ -16,8 +16,9 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import AlertBox from "./AlertBox";
+import UserLoggedOutMessage from "./UserLoggedOut";
 
-export default function TaskList() {
+const TaskList:React.FC<UserIsLoggedInProps>=({userId})=> {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,6 +43,16 @@ export default function TaskList() {
 
     fetchTasks();
   }, []);
+
+
+  if(!userId){
+    return(
+      <div className="flex justify-center m-4">
+        <UserLoggedOutMessage/>
+      </div>
+    )
+  }
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -191,3 +202,4 @@ export default function TaskList() {
     </>
   );
 }
+export default TaskList

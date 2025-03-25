@@ -21,6 +21,7 @@ export interface AlertboxProps{
     title: string;
 }
 
-export interface AddNewTaskComponentProps{
-    onTaskAdded:(newTask:Task)=>void;
-}
+export interface UserIsLoggedInProps{
+    userId:string|null;
+  }
+
