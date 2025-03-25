@@ -3,21 +3,31 @@ import { db } from "@/lib/database";
 import { AddNewTaskTypes} from "@/types";
 import { auth } from "@clerk/nextjs/server";
 
+
 export async function getUserId(){
     const {userId}=await auth();
     return userId;
 }
 
-export async function addTask({}:AddNewTaskTypes){
-    try{
-        const {userId} = await auth();
-        if(!userId) return {error:"Not Authenticated"};
-
-        return {success: "Task Added Successfully"};
-    }catch(error){
-        console.log("Error while adding new task:",error);
-        return {error:"Something went wrong"};
+export async function addTask({ title }: AddNewTaskTypes) {
+  try {
+    const { userId } = await auth();
+    if (!userId) {
+      return { error: "Not Authenticated" };
     }
+
+    const newTask = await db.task.create({
+      data: {
+        title: title,
+        userId: userId,
+      },
+    });
+
+    return { success: "Task Added Successfully", task: newTask };
+  } catch (error) {
+    console.error("Error while adding new task:", error);
+    return { error: "Something went wrong" };
+  }
 }
 
 export async function getAllTasks(){
