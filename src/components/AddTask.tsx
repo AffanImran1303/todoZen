@@ -1,8 +1,8 @@
 "use client";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
-import { addTask, getUserId } from "@/actions";
+import { useState } from "react";
+import { addTask } from "@/actions";
 import AlertBox from "./AlertBox";
 import { UserIsLoggedInProps } from "@/types";
 
@@ -39,6 +39,8 @@ const AddNewTaskComponent:React.FC<UserIsLoggedInProps> = ({userId}) => {
   }
   return (
     <div>
+      {isLoading && <div>Loading...</div>}
+      {error && <div>Error:{error}</div>}
       <div className="w-full space-y-4 lg:flex justify-between space-x-6 place-self-start">
         <Input
           placeholder="What's on your mind?"

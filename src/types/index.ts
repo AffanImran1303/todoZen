@@ -25,3 +25,12 @@ export interface UserIsLoggedInProps{
     userId:string|null;
   }
 
+  export interface AddNewTaskProps extends UserIsLoggedInProps{
+    onTaskAdded:(newTask:Task)=>void;
+  }
+
+export interface TaskListProps extends UserIsLoggedInProps {
+    refreshTasks: number;
+  }
+  
+
